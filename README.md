@@ -2,6 +2,10 @@
 
 A modern, responsive online library system built with React, Vite, and Redux Toolkit. Browse books, search by title or author, filter by categories, and add new books to the collection.
 
+## 🌐 Live Demo
+
+**Deployed Application:** [https://online-library-at-0001.vercel.app](https://online-library-at-0001.vercel.app)
+
 ## 🚀 Features
 
 - **📖 Home Page** - Welcome message with book categories and popular books
@@ -19,6 +23,7 @@ A modern, responsive online library system built with React, Vite, and Redux Too
 - **State Management**: Redux Toolkit
 - **Styling**: Pure CSS with CSS Custom Properties
 - **Icons**: SVG and Emoji icons
+- **Deployment**: Vercel
 
 ## 📦 Installation & Setup
 
@@ -198,6 +203,11 @@ online-library-at-0001/
 
 ## 🚀 Deployment
 
+### Live Deployment
+
+The application is automatically deployed on **Vercel** and available at:
+[https://online-library-at-0001.vercel.app](https://online-library-at-0001.vercel.app)
+
 ### Build for Production
 
 ```bash
@@ -208,8 +218,8 @@ The `dist` folder will contain the optimized production build ready for deployme
 
 ### Deployment Platforms
 
+- **Vercel**: [Current Deployment](https://online-library-at-0001.vercel.app)
 - **Netlify**: Drag and drop the `dist` folder
-- **Vercel**: Connect your GitHub repository
 - **GitHub Pages**: Use the `gh-pages` package
 
 ## 🤝 Contributing
@@ -230,6 +240,7 @@ The `dist` folder will contain the optimized production build ready for deployme
 - Vite team for the fast build tool
 - Redux team for state management solution
 - Emoji contributors for the beautiful icons
+- Vercel for seamless deployment
 
 ## 📞 Support
 
