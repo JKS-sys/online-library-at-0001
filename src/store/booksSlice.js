@@ -55,12 +55,12 @@ const booksSlice = createSlice({
   name: "books",
   initialState: initialBooks,
   reducers: {
-    addBook: (state, isAction) => {
+    addBook: (state, action) => {
       const newBook = {
         id: state.books.length + 1,
-        ...isAction.payload,
+        ...action.payload,
       };
-      state.books.unshift(newBook);
+      state.books.unshift(newBook); // Add to begining
     },
   },
 });
