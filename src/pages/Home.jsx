@@ -4,79 +4,136 @@ import { useSelector } from "react-redux";
 
 const Home = () => {
   const books = useSelector((state) => state.books.books);
-  const popularBooks = books.slice(0, 3); // Get first 3 books as popular
+  const popularBooks = books.slice(0, 3);
 
   const categories = [
-    "Fiction",
-    "Non-Fiction",
-    "Sci-Fi",
-    "Mystery",
-    "Biography",
-    "History",
+    {
+      name: "Fiction",
+      icon: "📚",
+      color: "bg-gradient-to-r from-blue-500 to-cyan-500",
+    },
+    {
+      name: "Non-Fiction",
+      icon: "📖",
+      color: "bg-gradient-to-r from-green-500 to-emerald-500",
+    },
+    {
+      name: "Sci-Fi",
+      icon: "🚀",
+      color: "bg-gradient-to-r from-purple-500 to-pink-500",
+    },
+    {
+      name: "Mystery",
+      icon: "🕵️",
+      color: "bg-gradient-to-r from-orange-500 to-red-500",
+    },
+    {
+      name: "Biography",
+      icon: "👤",
+      color: "bg-gradient-to-r from-indigo-500 to-blue-500",
+    },
+    {
+      name: "History",
+      icon: "🏛️",
+      color: "bg-gradient-to-r from-amber-500 to-orange-500",
+    },
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-bg">
       {/* Hero Section */}
-      <section className="text-center mb-12">
-        <h1 className="text-5xl font-bold text-gray-800 mb-4">
-          Welcome to Our Online Library
-        </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Discover thousands of books across various categories. Explore, read,
-          and expand your knowledge with our vast collection.
-        </p>
+      <section className="hero">
+        <div className="hero-content">
+          <h1 className="hero-title">
+            Welcome to Our
+            <span className="hero-gradient block">Digital Library</span>
+          </h1>
+          <p className="hero-description">
+            Discover thousands of books across various genres. Explore, read,
+            and expand your knowledge with our vast collection of literary
+            treasures.
+          </p>
+          <Link to="/browse" className="btn btn-primary">
+            <span>Explore Collection</span>
+            <span>→</span>
+          </Link>
+        </div>
       </section>
 
       {/* Categories Section */}
-      <section className="mb-12">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6">
-          Book Categories
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {categories.map((category) => (
-            <Link
-              key={category}
-              to={`/books/${category.toLowerCase()}`}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center"
-            >
-              <h3 className="text-lg font-medium text-gray-800">{category}</h3>
-            </Link>
-          ))}
+      <section className="py-16">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              Browse Categories
+            </h2>
+            <p className="text-gray-600 text-lg">
+              Find your next favorite book by category
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((category) => (
+              <Link
+                key={category.name}
+                to={`/books/${category.name.toLowerCase()}`}
+                className={`category-card ${category.color}`}
+              >
+                <div className="category-card-content">
+                  <div className="category-icon">{category.icon}</div>
+                  <h3 className="text-2xl font-bold mb-2">{category.name}</h3>
+                  <p className="text-blue-100">Explore {category.name} books</p>
+                </div>
+                <div className="category-bg-icon">{category.icon}</div>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Popular Books Section */}
-      <section>
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6">
-          Popular Books
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {popularBooks.map((book) => (
-            <div
-              key={book.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-            >
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                  {book.title}
-                </h3>
-                <p className="text-gray-600 mb-2">by {book.author}</p>
-                <p className="text-gray-500 text-sm mb-4">{book.category}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-yellow-500 font-semibold">
-                    ⭐ {book.rating}
-                  </span>
+      <section className="py-16 bg-white bg-opacity-50">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">
+              Popular Reads
+            </h2>
+            <p className="text-gray-600 text-lg">
+              Curated selection of our most loved books
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {popularBooks.map((book) => (
+              <div key={book.id} className="card card-hover">
+                <div className="p-6">
+                  <div className="book-card-header">
+                    <span
+                      className={`book-badge badge-${book.category
+                        .toLowerCase()
+                        .replace("-", "")}`}
+                    >
+                      {book.category}
+                    </span>
+                    <div className="rating">
+                      <span>⭐</span>
+                      <span>{book.rating}</span>
+                    </div>
+                  </div>
+
+                  <h3 className="book-title">{book.title}</h3>
+                  <p className="book-author">by {book.author}</p>
+                  <p className="book-description">{book.description}</p>
+
                   <Link
                     to={`/book/${book.id}`}
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+                    className="btn-secondary w-full justify-center"
                   >
-                    View Details
+                    <span>View Details</span>
+                    <span>→</span>
                   </Link>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
     </div>
