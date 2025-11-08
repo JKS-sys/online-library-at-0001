@@ -12,6 +12,7 @@ const Header = () => {
             <div className="logo-icon">OL</div>
             <span className="logo-text">Online Library</span>
           </Link>
+
           <div className="nav-links">
             <Link
               to="/"

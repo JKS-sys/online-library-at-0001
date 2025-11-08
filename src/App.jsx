@@ -1,15 +1,18 @@
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
 import Home from "./pages/Home";
 import BrowseBooks from "./pages/BrowseBooks";
 import BookDetails from "./pages/BookDetails";
 import AddBook from "./pages/AddBook";
 import NotFound from "./pages/NotFound";
-import Header from "./components/Header";
+
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-grey-50">
+      <div className="min-h-screen bg-gradient-bg">
         <Routes>
+          <Route path="*" element={<NotFound />} />
           <Route
             path="/"
             element={
@@ -52,15 +55,6 @@ function App() {
               <>
                 <Header />
                 <AddBook />
-              </>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <>
-                <Header />
-                <NotFound />
               </>
             }
           />

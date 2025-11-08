@@ -40,13 +40,13 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-bg">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
           <h1 className="hero-title">
             Welcome to Our
-            <span className="hero-gradient block">Digital Library</span>
+            <span className="hero-gradient">Digital Library</span>
           </h1>
           <p className="hero-description">
             Discover thousands of books across various genres. Explore, read,
@@ -103,8 +103,8 @@ const Home = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {popularBooks.map((book) => (
-              <div key={book.id} className="card card-hover">
-                <div className="p-6">
+              <div key={book.id} className="card card-hover book-card">
+                <div className="book-card-content">
                   <div className="book-card-header">
                     <span
                       className={`book-badge badge-${book.category
@@ -122,10 +122,12 @@ const Home = () => {
                   <h3 className="book-title">{book.title}</h3>
                   <p className="book-author">by {book.author}</p>
                   <p className="book-description">{book.description}</p>
+                </div>
 
+                <div className="book-card-footer">
                   <Link
                     to={`/book/${book.id}`}
-                    className="btn-secondary w-full justify-center"
+                    className="btn btn-secondary btn-full justify-center"
                   >
                     <span>View Details</span>
                     <span>→</span>
