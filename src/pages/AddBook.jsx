@@ -29,22 +29,42 @@ const AddBook = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.title.trim()) newErrors.title = "Title is required";
-    if (!formData.author.trim()) newErrors.author = "Author is required";
-    if (!formData.description.trim())
+
+    if (!formData.title.trim()) {
+      newErrors.title = "Title is required";
+    }
+
+    if (!formData.author.trim()) {
+      newErrors.author = "Author is required";
+    }
+
+    if (!formData.description.trim()) {
       newErrors.description = "Description is required";
-    if (!formData.category) newErrors.category = "Category is required";
-    if (!formData.rating) newErrors.rating = "Rating is required";
-    else if (formData.rating < 0 || formData.rating > 5)
+    }
+
+    if (!formData.category) {
+      newErrors.category = "Category is required";
+    }
+
+    if (!formData.rating) {
+      newErrors.rating = "Rating is required";
+    } else if (formData.rating < 0 || formData.rating > 5) {
       newErrors.rating = "Rating must be between 0 and 5";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (validateForm()) {
-      const bookData = { ...formData, rating: parseFloat(formData.rating) };
+      const bookData = {
+        ...formData,
+        rating: parseFloat(formData.rating),
+      };
+
       dispatch(addBook(bookData));
       navigate("/browse");
     }
@@ -52,14 +72,24 @@ const AddBook = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: "",
+      }));
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-8">
-      <div className="container mx-auto px-4">
-        <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen py-8">
+      <div className="container">
+        <div className="form-container">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-800 mb-4">
@@ -71,15 +101,12 @@ const AddBook = () => {
           </div>
 
           {/* Form Card */}
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="card">
             <div className="p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Title Field */}
-                <div>
-                  <label
-                    htmlFor="title"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
+                <div className="form-group">
+                  <label htmlFor="title" className="form-label">
                     Book Title *
                   </label>
                   <input
@@ -88,24 +115,15 @@ const AddBook = () => {
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                      errors.title
-                        ? "border-red-500 bg-red-50"
-                        : "border-gray-300 hover:border-gray-400"
-                    }`}
+                    className={`form-input ${errors.title ? "error" : ""}`}
                     placeholder="Enter book title"
                   />
-                  {errors.title && (
-                    <p className="text-red-500 text-sm mt-2">{errors.title}</p>
-                  )}
+                  {errors.title && <p className="form-error">{errors.title}</p>}
                 </div>
 
                 {/* Author Field */}
-                <div>
-                  <label
-                    htmlFor="author"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
+                <div className="form-group">
+                  <label htmlFor="author" className="form-label">
                     Author *
                   </label>
                   <input
@@ -114,26 +132,19 @@ const AddBook = () => {
                     name="author"
                     value={formData.author}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                      errors.author
-                        ? "border-red-500 bg-red-50"
-                        : "border-gray-300 hover:border-gray-400"
-                    }`}
+                    className={`form-input ${errors.author ? "error" : ""}`}
                     placeholder="Enter author name"
                   />
                   {errors.author && (
-                    <p className="text-red-500 text-sm mt-2">{errors.author}</p>
+                    <p className="form-error">{errors.author}</p>
                   )}
                 </div>
 
                 {/* Category and Rating Row */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="form-grid">
                   {/* Category Field */}
-                  <div>
-                    <label
-                      htmlFor="category"
-                      className="block text-sm font-semibold text-gray-700 mb-2"
-                    >
+                  <div className="form-group">
+                    <label htmlFor="category" className="form-label">
                       Category *
                     </label>
                     <select
@@ -141,10 +152,8 @@ const AddBook = () => {
                       name="category"
                       value={formData.category}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                        errors.category
-                          ? "border-red-500 bg-red-50"
-                          : "border-gray-300 hover:border-gray-400"
+                      className={`form-select ${
+                        errors.category ? "error" : ""
                       }`}
                     >
                       <option value="">Select a category</option>
@@ -155,18 +164,13 @@ const AddBook = () => {
                       ))}
                     </select>
                     {errors.category && (
-                      <p className="text-red-500 text-sm mt-2">
-                        {errors.category}
-                      </p>
+                      <p className="form-error">{errors.category}</p>
                     )}
                   </div>
 
                   {/* Rating Field */}
-                  <div>
-                    <label
-                      htmlFor="rating"
-                      className="block text-sm font-semibold text-gray-700 mb-2"
-                    >
+                  <div className="form-group">
+                    <label htmlFor="rating" className="form-label">
                       Rating (0-5) *
                     </label>
                     <input
@@ -178,27 +182,18 @@ const AddBook = () => {
                       step="0.1"
                       value={formData.rating}
                       onChange={handleChange}
-                      className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
-                        errors.rating
-                          ? "border-red-500 bg-red-50"
-                          : "border-gray-300 hover:border-gray-400"
-                      }`}
+                      className={`form-input ${errors.rating ? "error" : ""}`}
                       placeholder="Enter rating"
                     />
                     {errors.rating && (
-                      <p className="text-red-500 text-sm mt-2">
-                        {errors.rating}
-                      </p>
+                      <p className="form-error">{errors.rating}</p>
                     )}
                   </div>
                 </div>
 
                 {/* Description Field */}
-                <div>
-                  <label
-                    htmlFor="description"
-                    className="block text-sm font-semibold text-gray-700 mb-2"
-                  >
+                <div className="form-group">
+                  <label htmlFor="description" className="form-label">
                     Description *
                   </label>
                   <textarea
@@ -207,29 +202,25 @@ const AddBook = () => {
                     rows="4"
                     value={formData.description}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none ${
-                      errors.description
-                        ? "border-red-500 bg-red-50"
-                        : "border-gray-300 hover:border-gray-400"
+                    className={`form-input form-textarea ${
+                      errors.description ? "error" : ""
                     }`}
                     placeholder="Enter book description"
                   />
                   {errors.description && (
-                    <p className="text-red-500 text-sm mt-2">
-                      {errors.description}
-                    </p>
+                    <p className="form-error">{errors.description}</p>
                   )}
                 </div>
 
                 {/* Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <button type="submit" className="btn-primary flex-1">
+                  <button type="submit" className="btn btn-primary flex-1">
                     Add Book to Library
                   </button>
                   <button
                     type="button"
                     onClick={() => navigate("/browse")}
-                    className="btn-secondary flex-1"
+                    className="btn btn-secondary flex-1"
                   >
                     Cancel
                   </button>
